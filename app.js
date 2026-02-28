@@ -1,8 +1,8 @@
 require('dotenv').config();
 
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const PORT = process.env.PORT || 8080;
-const WEB_APP_URL = 'https://aisupport.bothost.ru';
+const PORT = process.env.PORT || 2789;
+const WEB_APP_URL = 'https://supportai.bothost.ru';
 const HOSTING_URL = 'https://bothost.ru';
 const CHANNEL_URL = 'https://t.me/bothostru';
 
