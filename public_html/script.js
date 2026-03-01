@@ -1,3 +1,4 @@
+// ===== КОНФИГУРАЦИЯ =====
 const SYSTEM_PROMPT = `Ты — ассистент технической поддержки хостинга BotHost (bothost.ru).
 
 ТВОЯ СПЕЦИАЛИЗАЦИЯ:
@@ -476,21 +477,8 @@ function copyCode(button) {
     const codeElement = codeBlock.querySelector('code');
     const text = codeElement.textContent;
     
-    navigator.clipboard.writeText(text).then(() => {
-        const icon = button.querySelector('i');
-        const textSpan = button.querySelector('.copy-text');
-        
-        if (icon) icon.className = 'fas fa-check';
-        if (textSpan) textSpan.textContent = 'Скопировано!';
-        button.classList.add('copied');
-        
-        setTimeout(() => {
-            if (icon) icon.className = 'far fa-copy';
-            if (textSpan) textSpan.textContent = 'Копировать';
-            button.classList.remove('copied');
-        }, 2000);
-    }).catch(err => {
-        console.error('Ошибка копирования:', err);
+    navigator.clipboard.writeText(text).catch(() => {
+        // Тихая ошибка, ничего не показываем
     });
 }
 
@@ -501,7 +489,7 @@ function highlightAndFormatCode() {
                 block.className = block.className.replace(/\bhljs\b/g, '');
                 hljs.highlightElement(block);
             } catch (error) {
-                console.error('Ошибка подсветки кода:', error);
+                // Тихая ошибка
             }
         });
     }
@@ -582,7 +570,6 @@ async function continueAIResponse() {
     ];
     
     try {
-        // ОТПРАВЛЯЕМ НА СВОЙ СЕРВЕР, а не напрямую в OpenRouter!
         const response = await fetch('/api/ai', {
             method: 'POST',
             headers: {
@@ -592,12 +579,12 @@ async function continueAIResponse() {
         });
         
         if (!response.ok) {
-            const error = await response.json();
-            throw new Error(error.error || `HTTP ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Ошибка ${response.status}`);
         }
         
         const data = await response.json();
-        const aiText = data.response; // Внимание! Сервер возвращает { response: "текст" }
+        const aiText = data.response;
         
         if (!aiText) throw new Error('Пустой ответ');
         
@@ -644,8 +631,6 @@ async function continueAIResponse() {
         renderChatsList();
         
     } catch (error) {
-        console.error('Ошибка продолжения:', error);
-        
         if (typingIndicator) typingIndicator.remove();
         
         isAITyping = false;
@@ -658,7 +643,7 @@ async function continueAIResponse() {
             if (autoScrollEnabled && !userScrolledUp) {
                 instantTeleportToBottom();
             }
-            showError('Ошибка: ' + error.message);
+            showError('⚠️ Ошибка: ' + (error.message || 'Неизвестная ошибка'));
         }
     }
 }
@@ -692,7 +677,7 @@ function stopAITyping() {
 
 async function sendMessage() {
     if (!isInitialized) {
-        showError('Приложение еще не готово. Подождите...');
+        showError('⚠️ Приложение еще не готово. Подождите...');
         return;
     }
     
@@ -748,7 +733,6 @@ async function sendMessage() {
             }))
         ];
         
-        // ОТПРАВЛЯЕМ НА СВОЙ СЕРВЕР, а не напрямую в OpenRouter!
         const response = await fetch('/api/ai', {
             method: 'POST',
             headers: {
@@ -763,7 +747,7 @@ async function sendMessage() {
         }
         
         const data = await response.json();
-        const aiText = data.response; // Внимание! Сервер возвращает { response: "текст" }
+        const aiText = data.response;
         
         if (!aiText) throw new Error('Пустой ответ');
         
@@ -830,8 +814,6 @@ async function sendMessage() {
         renderChatsList();
         
     } catch (error) {
-        console.error('Ошибка:', error);
-        
         hideTypingIndicator();
         isTyping = false;
         isAITyping = false;
@@ -848,14 +830,25 @@ async function sendMessage() {
                 instantTeleportToBottom();
             }
             
-            let errorMessage = error.message || 'Ошибка подключения';
-            showError(errorMessage);
+            // Показываем ошибку ТОЛЬКО в чате, без консоли
+            let errorMessage = error.message || 'Неизвестная ошибка';
             
-            if (chat.messages.length > 0 && chat.messages[chat.messages.length - 1].role === 'user') {
-                chat.messages.pop();
-                chatStorage.save(currentChatId, chat);
-                renderMessages(chat.messages);
+            // Преобразуем технические ошибки в понятные сообщения
+            if (errorMessage.includes('402')) {
+                errorMessage = 'Недостаточно средств на счете OpenRouter';
+            } else if (errorMessage.includes('401')) {
+                errorMessage = 'Ошибка авторизации API';
+            } else if (errorMessage.includes('429')) {
+                errorMessage = 'Слишком много запросов, подождите';
+            } else if (errorMessage.includes('Failed to fetch')) {
+                errorMessage = 'Нет соединения с сервером';
             }
+            
+            showError('❌ ' + errorMessage);
+            
+            // Сохраняем сообщение пользователя
+            chatStorage.save(currentChatId, chat);
+            renderMessages(chat.messages);
         }
     }
 }
@@ -936,7 +929,7 @@ function showError(text) {
 }
 
 async function typeText(element, text, speed = 5, abortSignal, startFrom = 0) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         let i = startFrom;
         let buffer = text.substring(0, startFrom);
         
@@ -1031,11 +1024,9 @@ async function initApp() {
         }
         
         isInitialized = true;
-        console.log('✅ Приложение готово, все запросы идут через сервер');
         
     } catch (error) {
-        console.error('Ошибка инициализации:', error);
-        showError('Ошибка подключения к серверу.');
+        showError('❌ Ошибка подключения к серверу');
     }
 }
 
