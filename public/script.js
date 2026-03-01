@@ -1,7 +1,7 @@
 const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
-const SELECTED_MODEL = 'google/gemini-2.5-flash-preview-09-2025';
+const SELECTED_MODEL = 'qwen/qwen3-coder:free';
 
 const SYSTEM_PROMPT = `Ты — ассистент технической поддержки хостинга BotHost (bothost.ru).
 
