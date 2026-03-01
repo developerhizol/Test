@@ -1,4 +1,4 @@
-const OPENROUTER_API_KEY = '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';
+const OPENROUTER_API_KEY = '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';
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const SELECTED_MODEL = 'google/gemini-2.5-flash-preview-09-2025';
