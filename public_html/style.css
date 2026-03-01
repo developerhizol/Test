@@ -1,0 +1,1033 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+    --bg: #000000;
+    --bg-light: #1a1a1a;
+    --bg-lighter: #2a2a2a;
+    --text: #ffffff;
+    --text-light: #aaaaaa;
+    --accent: #6366f1;
+    --accent-hover: #8183f3;
+    --border: #333333;
+    --user-msg: #2a2a2a;
+    --ai-msg: #1a1a1a;
+    --error: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --ai-color: #6366f1;
+    --scroll-btn-bg: #2a2a2a;
+    --scroll-btn-border: #222222;
+    --scroll-btn-shadow: rgba(0, 0, 0, 0.5);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+    z-index: 100;
+    position: sticky;
+    top: 0;
+}
+
+.menu-btn, .new-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: none;
+    background: var(--bg-light);
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: var(--transition);
+    -webkit-appearance: none;
+}
+
+.menu-btn:hover, .new-btn:hover {
+    background: var(--bg-lighter);
+    transform: translateY(-1px);
+}
+
+.menu-btn:active, .new-btn:active {
+    background: var(--accent);
+    transform: scale(0.95);
+}
+
+.title {
+    flex: 1;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 12px;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 85%;
+    height: 100vh;
+    background: var(--bg-light);
+    border-right: 1px solid var(--border);
+    z-index: 1000;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.close-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    border: none;
+    background: none;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: var(--transition);
+}
+
+.close-btn:hover {
+    background: var(--bg-lighter);
+    transform: rotate(90deg);
+}
+
+.close-btn:active {
+    background: var(--bg-lighter);
+    transform: scale(0.95) rotate(90deg);
+}
+
+.chats-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.empty-chats {
+    text-align: center;
+    color: var(--text-light);
+    padding: 40px 20px;
+    font-size: 14px;
+}
+
+.chat-item {
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border: 1px solid transparent;
+    min-height: 60px;
+}
+
+.chat-item:hover {
+    background: var(--bg-lighter);
+    transform: translateX(4px);
+    border-color: var(--border);
+}
+
+.chat-item.active {
+    background: var(--bg-lighter);
+    border-left: 4px solid var(--accent);
+    border-color: var(--border);
+}
+
+.chat-name {
+    font-size: 15px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+}
+
+.chat-preview {
+    font-size: 13px;
+    color: var(--text-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-btn {
+    opacity: 0.7;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: var(--error);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.delete-btn:active {
+    background: #dc2626;
+    transform: scale(0.95);
+}
+
+/* Main Content */
+.main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Welcome screen */
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    animation: fadeIn 0.3s;
+    padding: 20px;
+    flex: 1;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.welcome-image {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 5px;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+}
+
+.welcome-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.welcome-fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    color: var(--accent);
+    background: transparent;
+}
+
+.welcome-subtitle {
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 500;
+    opacity: 0.9;
+    max-width: 300px;
+    line-height: 1.4;
+    margin-top: 0;
+}
+
+/* Chat container */
+.chat {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+/* Chat Messages */
+.message {
+    display: flex;
+    max-width: 85%;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-message {
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.ai-message {
+    align-self: flex-start;
+    margin-right: auto;
+}
+
+.message-content {
+    padding: 16px 20px;
+    border-radius: 18px;
+    line-height: 1.6;
+    position: relative;
+    word-break: break-word;
+    font-size: 15px;
+    max-width: 100%;
+    transition: var(--transition);
+}
+
+.user-message .message-content {
+    background: var(--user-msg);
+    border-bottom-right-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-message .message-content {
+    background: var(--ai-msg);
+    border-bottom-left-radius: 6px;
+    border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.message-text {
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+/* Typing Indicator - общий */
+.typing {
+    display: none;
+    align-self: flex-start;
+    gap: 10px;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.typing.active {
+    display: flex;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* Typing Indicator внутри сообщения */
+.message-typing {
+    display: none;
+    gap: 6px;
+    margin-top: 12px;
+    padding: 10px 0;
+}
+
+.message-typing.active {
+    display: flex;
+}
+
+.typing-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+    opacity: 0.6;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+}
+
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 60%, 100% { 
+        transform: translateY(0); 
+        opacity: 0.6;
+    }
+    30% { 
+        transform: translateY(-6px); 
+        opacity: 1;
+    }
+}
+
+/* Footer - ПРОЗРАЧНЫЙ ФОН */
+.footer {
+    background: transparent;
+    padding: 12px 16px;
+    flex-shrink: 0;
+    z-index: 100;
+    position: sticky;
+    bottom: 0;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: relative;
+    width: 100%;
+}
+
+/* Кнопка прокрутки вниз */
+.scroll-down-btn {
+    position: absolute;
+    bottom: 90px;
+    right: 24px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid var(--scroll-btn-border);
+    background: var(--scroll-btn-bg);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(50px) scale(0.7);
+    z-index: 99;
+    box-shadow: 0 3px 12px var(--scroll-btn-shadow);
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.scroll-down-btn.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.scroll-down-btn:hover {
+    background: var(--bg-lighter);
+    border-color: var(--text-light);
+    transform: translateY(0) scale(1.1);
+    box-shadow: 0 5px 15px var(--scroll-btn-shadow);
+}
+
+.scroll-down-btn:active,
+.scroll-down-btn:focus {
+    background: var(--scroll-btn-bg) !important;
+    border-color: var(--scroll-btn-border) !important;
+    transform: translateY(0) scale(1) !important;
+    box-shadow: 0 3px 12px var(--scroll-btn-shadow) !important;
+    outline: none !important;
+}
+
+.scroll-down-btn i {
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Поле ввода - НА ПРОЗРАЧНОМ ФОНЕ */
+textarea {
+    flex: 1;
+    background: rgba(26, 26, 26, 0.9);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    color: var(--text);
+    padding: 16px 52px 16px 20px;
+    font-family: inherit;
+    font-size: 15px;
+    resize: none;
+    outline: none;
+    min-height: 56px;
+    max-height: 150px;
+    line-height: 1.5;
+    transition: var(--transition);
+    border: 2px solid var(--border);
+    margin: 0;
+    width: 100%;
+    overflow-y: auto !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    backdrop-filter: blur(10px);
+}
+
+/* Убираем скроллбар в WebKit браузерах */
+textarea::-webkit-scrollbar {
+    display: none;
+}
+
+textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    background: rgba(26, 26, 26, 1);
+}
+
+/* Кнопка отправки/остановки */
+.send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: var(--accent);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    font-size: 16px;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    pointer-events: auto;
+}
+
+.send-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+.send-btn:active {
+    background: #4f46e5;
+    transform: translateY(-50%) scale(0.95);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.send-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translateY(-50%);
+}
+
+/* Плавное скрытие кнопки */
+.send-btn.hidden {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.8);
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+/* Плавное появление кнопки */
+.send-btn:not(.hidden) {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+    transition: var(--transition);
+}
+
+/* Иконки кнопки отправки/остановки */
+.send-icon {
+    display: block;
+    color: white;
+    transition: var(--transition);
+}
+
+.stop-icon {
+    display: none;
+    color: white;
+    font-size: 14px;
+    transform: rotate(45deg);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+/* Когда AI печатает - показываем квадрат */
+.send-btn.ai-typing .send-icon {
+    display: none;
+}
+
+.send-btn.ai-typing .stop-icon {
+    display: block;
+    animation: pulse 1.5s infinite;
+}
+
+/* Кнопка "Продолжить" */
+.continue-btn {
+    margin-top: 12px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    animation: pulse 2s infinite;
+}
+
+.continue-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+.continue-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+/* Code blocks - ИСПРАВЛЕНА СТРУКТУРА */
+.code-block {
+    margin: 16px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg); /* Основной фон всего блока */
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.code-block:hover {
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.1);
+}
+
+/* Шапка с языком программирования */
+.code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-light);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--text-light);
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    min-height: auto;
+    order: 1; /* Шапка ПЕРВАЯ */
+}
+
+.code-lang {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.code-lang i {
+    color: var(--accent);
+    font-size: 14px;
+}
+
+.code-lang .lang-name {
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.copy-btn {
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid var(--border);
+    color: var(--text-light);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+    min-height: 32px;
+}
+
+.copy-btn:hover {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--accent);
+    color: var(--text);
+    transform: translateY(-1px);
+}
+
+.copy-btn:active {
+    transform: scale(0.95);
+}
+
+.copy-btn.copied {
+    background: var(--success);
+    color: white;
+    border-color: var(--success);
+}
+
+.copy-btn.copied:hover {
+    background: var(--success);
+    transform: none;
+}
+
+.copy-btn i {
+    font-size: 12px;
+}
+
+.copy-btn .copy-text {
+    font-size: 12px;
+}
+
+/* Черная дощечка с кодом - НАХОДИТСЯ ПОД ШАПКОЙ */
+.code-container {
+    order: 2; /* Контейнер с кодом ВТОРОЙ (под шапкой) */
+    background: var(--bg); /* Черный фон для кода */
+    overflow: hidden;
+    border-radius: 0 0 12px 12px; /* Скругления только снизу */
+}
+
+pre {
+    margin: 0;
+    padding: 16px;
+    background: var(--bg); /* Черный фон для кода */
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.5;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    white-space: pre;
+    word-wrap: normal;
+    tab-size: 4;
+    transition: var(--transition);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+pre:hover {
+    background: rgba(0, 0, 0, 0.95);
+}
+
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: transparent;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: inherit;
+    color: inherit;
+    display: block;
+    overflow-x: auto;
+    line-height: 1.5;
+    border: none;
+    font-size: 13px;
+}
+
+/* Подсветка синтаксиса */
+.hljs {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+/* Сохраняем пробелы и переносы в коде */
+pre code .hljs {
+    white-space: pre;
+    word-wrap: normal;
+    background: transparent !important;
+}
+
+/* Error message */
+.error-message .message-content {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border: 1px solid var(--error) !important;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.error-message .message-text {
+    color: var(--error) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.error-message .message-text i {
+    font-size: 16px;
+    animation: pulse 1.5s infinite;
+}
+
+/* Utility classes */
+.hidden {
+    display: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 90%;
+        left: -90%;
+    }
+    
+    .welcome-image {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 5px;
+    }
+    
+    .welcome-fallback {
+        font-size: 36px;
+    }
+    
+    .welcome-subtitle {
+        font-size: 18px;
+        margin-top: 0;
+    }
+    
+    .header, .footer {
+        padding: 10px 12px;
+    }
+    
+    .main {
+        padding: 16px;
+    }
+    
+    .message {
+        max-width: 90%;
+    }
+    
+    .message-content {
+        padding: 14px 18px;
+        font-size: 14px;
+    }
+    
+    .chat-item {
+        padding: 12px;
+    }
+    
+    .typing {
+        padding: 16px;
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
+    
+    .scroll-down-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+        bottom: 80px;
+        right: 20px;
+    }
+    
+    textarea {
+        padding: 14px 50px 14px 16px;
+        font-size: 14px;
+        min-height: 52px;
+        background: rgba(26, 26, 26, 0.95);
+    }
+    
+    .send-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+        right: 10px;
+    }
+    
+    .stop-icon {
+        font-size: 12px;
+    }
+    
+    .code-header {
+        padding: 10px 12px;
+    }
+    
+    pre {
+        padding: 12px;
+        font-size: 13px;
+    }
+    
+    .copy-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar {
+        width: 100%;
+        left: -100%;
+    }
+    
+    .title {
+        font-size: 15px;
+    }
+    
+    .welcome-image {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 5px;
+    }
+    
+    .welcome-fallback {
+        font-size: 32px;
+    }
+    
+    .welcome-subtitle {
+        font-size: 16px;
+        margin-top: 0;
+    }
+    
+    .menu-btn, .new-btn, .close-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .send-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 13px;
+        right: 8px;
+    }
+    
+    .stop-icon {
+        font-size: 11px;
+    }
+    
+    textarea {
+        padding: 12px 48px 12px 14px;
+        font-size: 14px;
+        min-height: 48px;
+        background: rgba(26, 26, 26, 0.95);
+    }
+    
+    .typing {
+        padding: 14px;
+        margin-top: 6px;
+        margin-bottom: 14px;
+    }
+    
+    .scroll-down-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+        bottom: 75px;
+        right: 18px;
+    }
+    
+    .code-header {
+        padding: 8px 10px;
+    }
+    
+    pre {
+        padding: 10px;
+        font-size: 12px;
+    }
+    
+    .copy-btn {
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+    
+    .code-lang .lang-name {
+        font-size: 11px;
+    }
+}
