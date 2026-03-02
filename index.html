@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F1 (2025)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root{
+--bg:#000;
+--accent:#e50914;
+--line:#1c1c1c;
+--radius:12px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+background:var(--bg);
+font-family:'Inter',sans-serif;
+color:#fff;
+overflow-x:hidden;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+position:relative;
+height:650px; /* постер стал короче */
+background:
+linear-gradient(to bottom,
+rgba(0,0,0,0) 55%,
+rgba(0,0,0,0.9) 75%,
+#000 90%),
+url('https://s1.radikal.cloud/2026/03/02/image4538e3e281afb356.jpg');
+background-size:cover;
+background-position:center 20%;
+display:flex;
+align-items:flex-end;
+justify-content:center;
+text-align:center;
+padding:0 20px 50px; /* меньше отступ снизу */
+}
+
+.hero-content{
+max-width:750px;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+.hero-logo img{
+width:185px;
+margin-bottom:14px;
+}
+
+/* META */
+
+.meta{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+margin-bottom:14px;
+font-weight:600;
+}
+
+.meta span{
+color:#ccc;
+font-size:.85rem;
+}
+
+.rating,
+.age{
+border:1px solid rgba(255,255,255,.4);
+padding:3px 8px;
+border-radius:4px;
+color:#fff !important;
+}
+
+.dot{
+width:4px;
+height:4px;
+background:#777;
+border-radius:50%;
+}
+
+/* BUTTONS */
+
+.actions{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+justify-content:center;
+margin-bottom:16px;
+}
+
+.btn-main,
+.btn-secondary{
+padding:.8rem 2rem;
+border-radius:8px;
+font-weight:700;
+cursor:pointer;
+text-transform:uppercase;
+font-size:.85rem;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.btn-main{
+border:none;
+background:var(--accent);
+color:#fff;
+}
+
+.btn-secondary{
+border:1px solid rgba(255,255,255,.3);
+background:rgba(255,255,255,.08);
+color:#fff;
+}
+
+.btn-fav{
+width:48px;
+height:48px;
+border-radius:8px;
+border:1px solid rgba(255,255,255,.3);
+background:rgba(255,255,255,.1);
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+font-size:1.1rem;
+}
+
+/* DESCRIPTION */
+
+.description{
+color:#ccc;
+font-size:.95rem;
+line-height:1.5;
+max-width:650px;
+}
+
+/* ================= SECTIONS ================= */
+
+.section{
+padding:35px 6%; /* было 70px — уменьшено */
+}
+
+.section-title{
+font-family:'Oswald',sans-serif;
+border-left:3px solid var(--accent);
+padding-left:10px;
+margin-bottom:15px;
+font-size:1.1rem;
+}
+
+/* CARDS */
+
+.row-scroll{
+display:flex;
+gap:14px;
+overflow-x:auto;
+padding-bottom:5px;
+}
+
+.row-scroll::-webkit-scrollbar{display:none}
+
+.card{
+min-width:140px;
+}
+
+.poster{
+width:140px;
+height:210px;
+border-radius:var(--radius);
+overflow:hidden;
+background:#111;
+}
+
+.poster img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.card-title{
+margin-top:6px;
+font-size:.8rem;
+font-weight:600;
+}
+
+.card-sub{
+font-size:.7rem;
+color:#aaa;
+}
+
+/* INFO TABLE */
+
+.info{
+margin-top:25px;
+border-top:1px solid var(--line);
+}
+
+.info-row{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid var(--line);
+font-size:.85rem;
+}
+
+.info-row span:first-child{
+color:#888;
+}
+
+.info-row span:last-child{
+color:#fff;
+font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+<div class="hero-content">
+
+<div class="hero-logo">
+<img src="https://radika1.link/2026/03/02/img1c380a0faabf4451.png">
+</div>
+
+<div class="meta">
+<span class="rating">8.2</span>
+<span>2025</span>
+<div class="dot"></div>
+<span>Драма</span>
+<div class="dot"></div>
+<span>США</span>
+<div class="dot"></div>
+<span>2 ч 35 мин</span>
+<span class="age">18+</span>
+</div>
+
+<div class="actions">
+<button class="btn-main"><i class="fas fa-play"></i> СМОТРЕТЬ</button>
+<button class="btn-secondary"><i class="fas fa-film"></i> ТРЕЙЛЕР</button>
+<div class="btn-fav"><i class="far fa-heart"></i></div>
+</div>
+
+<p class="description">
+В 1990-х Сонни Хейс был восходящей звездой «Формулы-1», но после серьёзной аварии ушёл из большого спорта.
+30 лет спустя Сонни живёт в трейлере и зарабатывает участием в различных гонках и чемпионатах.
+Однажды к нему поступает предложение вернуться в мир профессиональных гонок.
+</p>
+
+</div>
+</section>
+
+<section class="section">
+<h3 class="section-title">В РОЛЯХ</h3>
+<div class="row-scroll">
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?man,portrait"></div><div class="card-title">Брэд Питт</div><div class="card-sub">Sonny Hayes</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?black,man"></div><div class="card-title">Демсон Идрис</div><div class="card-sub">Joshua Pearce</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?woman,portrait"></div><div class="card-title">Керри Кондон</div><div class="card-sub">Kate McKenna</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?spanish,actor"></div><div class="card-title">Хавьер Бардем</div><div class="card-sub">Ruben Cervantes</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?bearded,man"></div><div class="card-title">Ким Бодния</div><div class="card-sub">Kaspar Smolinski</div></div>
+</div>
+</section>
+
+<section class="section">
+<h3 class="section-title">ПОХОЖИЕ ПРОЕКТЫ</h3>
+<div class="row-scroll">
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?race,car"></div><div class="card-title">Дни грома</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?formula1"></div><div class="card-title">Гонка</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?rally"></div><div class="card-title">Гран-при</div></div>
+<div class="card"><div class="poster"><img src="https://source.unsplash.com/300x450/?ford,ferrari"></div><div class="card-title">Ford против Ferrari</div></div>
+</div>
+
+<div class="info">
+<div class="info-row"><span>Оригинал</span><span>F1</span></div>
+<div class="info-row"><span>Жанры</span><span>Драма, Спорт</span></div>
+<div class="info-row"><span>Страны</span><span>США</span></div>
+<div class="info-row"><span>Длительность</span><span>2 ч 35 мин</span></div>
+<div class="info-row"><span>IMDb</span><span>★ 7.6</span></div>
+<div class="info-row"><span>Кинопоиск</span><span>★ 8.2</span></div>
+<div class="info-row"><span>Бюджет</span><span>$200 000 000</span></div>
+<div class="info-row"><span>Сборы мир</span><span>$633 142 436</span></div>
+<div class="info-row"><span>Сборы США</span><span>$189 642 436</span></div>
+</div>
+
+</section>
+
+</body>
+</html>
