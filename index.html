@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440">
+<title>F1 (2025)</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+    background:#0f0f0f;
+    font-family:Inter,sans-serif;
+    color:#fff;
+}
+.wrapper{
+    width:1280px;
+    margin:0 auto;
+    padding-top:40px;
+}
+
+/* верхняя строка */
+.top-line{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-size:14px;
+    color:#b3b3b3;
+    margin-bottom:24px;
+}
+.rating-box{
+    background:#1b1b1b;
+    padding:4px 10px;
+    border-radius:6px;
+    color:#fff;
+    font-weight:600;
+}
+.age-box{
+    border:1px solid #444;
+    padding:4px 10px;
+    border-radius:6px;
+    color:#ccc;
+}
+
+/* кнопки */
+.buttons{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:28px;
+}
+.btn-watch{
+    background:#e50914;
+    padding:18px 60px;
+    border-radius:12px;
+    font-weight:700;
+    letter-spacing:.5px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+}
+.btn-trailer{
+    background:#1b1b1b;
+    border:1px solid #2a2a2a;
+    padding:18px 50px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    cursor:pointer;
+}
+.btn-fav{
+    width:56px;
+    height:56px;
+    border-radius:12px;
+    background:#1b1b1b;
+    border:1px solid #2a2a2a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    font-size:20px;
+}
+
+/* описание */
+.description{
+    width:880px;
+    line-height:1.7;
+    color:#cfcfcf;
+    font-size:16px;
+    margin-bottom:40px;
+}
+
+/* заголовки */
+.section{
+    margin-bottom:50px;
+}
+.section-title{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:20px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.section-title::before{
+    content:"";
+    width:3px;
+    height:18px;
+    background:#e50914;
+}
+
+/* карточки */
+.cards{
+    display:flex;
+    gap:18px;
+}
+.card{
+    width:170px;
+}
+.card img{
+    width:170px;
+    height:230px;
+    border-radius:14px;
+    object-fit:cover;
+}
+.card-name{
+    margin-top:10px;
+    font-size:14px;
+    font-weight:600;
+}
+.card-role{
+    font-size:12px;
+    color:#9c9c9c;
+}
+
+/* похожие */
+.similar img{
+    height:250px;
+}
+
+/* таблица */
+.info{
+    margin-top:20px;
+    border-top:1px solid #1f1f1f;
+}
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:18px 0;
+    border-bottom:1px solid #1f1f1f;
+    color:#a8a8a8;
+}
+.info-row span:last-child{
+    color:#fff;
+    font-weight:600;
+}
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+
+<div class="top-line">
+    <div class="rating-box">8.2</div>
+    <div>2025</div>
+    <div>• Драма</div>
+    <div>• США</div>
+    <div>• 2 ч 35 мин</div>
+    <div class="age-box">18+</div>
+</div>
+
+<div class="buttons">
+    <div class="btn-watch">▶ СМОТРЕТЬ</div>
+    <div class="btn-trailer">▣ ТРЕЙЛЕР</div>
+    <div class="btn-fav">♡</div>
+</div>
+
+<div class="description">
+В 1990-х Сонни Хейс был восходящей звездой «Формулы-1», но после серьёзной аварии ушёл из большого спорта. 
+30 лет спустя Сонни живёт в трейлере и зарабатывает участием в различных гонках и чемпионатах. 
+Однажды к нему поступает предложение вернуться в мир профессиональных гонок.
+</div>
+
+<div class="section">
+<div class="section-title">В РОЛЯХ</div>
+
+<div class="cards">
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?man,portrait">
+<div class="card-name">Брэд Питт</div>
+<div class="card-role">Sonny Hayes</div>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?black,man">
+<div class="card-name">Демсон Идрис</div>
+<div class="card-role">Joshua Pearce</div>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?woman,portrait">
+<div class="card-name">Керри Кондон</div>
+<div class="card-role">Kate McKenna</div>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?spanish,actor">
+<div class="card-name">Хавьер Бардем</div>
+<div class="card-role">Ruben Cervantes</div>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?british,man">
+<div class="card-name">Тобайас Мензис</div>
+<div class="card-role">Peter Banning</div>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?bearded,man">
+<div class="card-name">Ким Бодния</div>
+<div class="card-role">Kaspar Smolinski</div>
+</div>
+
+<div class="card">
+<img src="https://source.unsplash.com/300x400/?african,woman">
+<div class="card-name">Сара Найлз</div>
+<div class="card-role">Bernadette</div>
+</div>
+</div>
+</div>
+
+<div class="section">
+<div class="section-title">ПОХОЖИЕ ПРОЕКТЫ</div>
+
+<div class="cards similar">
+<div class="card"><img src="https://source.unsplash.com/300x400/?race,car"><div class="card-name">Дни грома</div></div>
+<div class="card"><img src="https://source.unsplash.com/300x400/?formula1"><div class="card-name">Гонщик</div></div>
+<div class="card"><img src="https://source.unsplash.com/300x400/?rally"><div class="card-name">Гран-при</div></div>
+<div class="card"><img src="https://source.unsplash.com/300x400/?drivers"><div class="card-name">Гонка</div></div>
+<div class="card"><img src="https://source.unsplash.com/300x400/?ford,ferrari"><div class="card-name">Ford против Ferrari</div></div>
+<div class="card"><img src="https://source.unsplash.com/300x400/?gt,car"><div class="card-name">Гран туризмо</div></div>
+</div>
+</div>
+
+<div class="info">
+<div class="info-row"><span>Оригинал</span><span>F1</span></div>
+<div class="info-row"><span>Жанры</span><span>Драма, Спорт</span></div>
+<div class="info-row"><span>Страны</span><span>США</span></div>
+<div class="info-row"><span>Длительность</span><span>2 ч 35 мин</span></div>
+<div class="info-row"><span>IMDb</span><span>★ 7.6</span></div>
+<div class="info-row"><span>Кинопоиск</span><span>★ 8.2</span></div>
+<div class="info-row"><span>Бюджет</span><span>$200 000 000</span></div>
+<div class="info-row"><span>Сборы мир</span><span>$633 142 436</span></div>
+<div class="info-row"><span>Сборы США</span><span>$189 642 436</span></div>
+</div>
+
+</div>
+</body>
+</html>
