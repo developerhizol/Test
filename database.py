@@ -31,6 +31,13 @@ class Database:
                 )
             """)
             conn.execute("""
+                CREATE TABLE IF NOT EXISTS user_tokens (
+                    user_id INTEGER PRIMARY KEY,
+                    token TEXT UNIQUE NOT NULL,
+                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                )
+            """)
+            conn.execute("""
                 CREATE TABLE IF NOT EXISTS payments_log (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER,
@@ -125,6 +132,19 @@ class Database:
                 FROM users WHERE user_id = ?
             """, (user_id,)).fetchone()
             return row['is_active'] == 1 if row else False
+
+    def get_user_token(self, user_id: int) -> Optional[str]:
+        with self._get_connection() as conn:
+            row = conn.execute("SELECT token FROM user_tokens WHERE user_id = ?", (user_id,)).fetchone()
+            return row['token'] if row else None
+
+    def save_user_token(self, user_id: int, token: str):
+        with self._get_connection() as conn:
+            conn.execute("""
+                INSERT OR REPLACE INTO user_tokens (user_id, token)
+                VALUES (?, ?)
+            """, (user_id, token))
+            conn.commit()
 
     def log_payment(self, user_id: int, amount: int):
         with self._get_connection() as conn:
