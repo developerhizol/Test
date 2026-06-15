@@ -9,7 +9,7 @@ def get_main_keyboard(user_id: int = None) -> InlineKeyboardMarkup:
     if token:
         btn_connect = InlineKeyboardButton(
             text="Подключить VPN",
-            web_app=WebAppInfo(url=f"https://subscription.bothost.tech/{token}"),
+            web_app=WebAppInfo(url=f"https://sub-streamnet.bothost.tech/{token}"),
             icon_custom_emoji_id="5323761960829862762"
         )
     else:
