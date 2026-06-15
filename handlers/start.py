@@ -1,6 +1,6 @@
 from aiogram import Router
 from aiogram.filters import CommandStart
-from aiogram.types import Message, CallbackQuery
+from aiogram.types import Message
 from datetime import datetime
 from database import db
 from keyboards.main_menu import get_main_keyboard
@@ -10,14 +10,11 @@ router = Router()
 def emoji(emoji_id: str, fallback: str) -> str:
     return f'<tg-emoji emoji-id="{emoji_id}">{fallback}</tg-emoji>'
 
-async def edit_main_menu(target, user_id: int, first_name: str, username: str = None):
-    if db.is_user_banned(user_id):
-        text = "🚫 <b>Вы заблокированы.</b>\n\nОбратитесь к администратору: @StreamNetAdmin"
-        if isinstance(target, CallbackQuery):
-            await target.message.edit_text(text, parse_mode="HTML")
-        else:
-            await target.answer(text, parse_mode="HTML")
-        return
+@router.message(CommandStart())
+async def cmd_start(message: Message):
+    user_id = message.from_user.id
+    first_name = message.from_user.first_name
+    username = message.from_user.username
 
     user = db.get_user(user_id)
     is_new = user is None
@@ -51,23 +48,8 @@ async def edit_main_menu(target, user_id: int, first_name: str, username: str = 
         f"{gift_text}"
     )
 
-    if isinstance(target, CallbackQuery):
-        await target.message.edit_text(
-            text,
-            reply_markup=get_main_keyboard(),
-            parse_mode="HTML"
-        )
-    else:
-        await target.answer(
-            text,
-            reply_markup=get_main_keyboard(),
-            parse_mode="HTML"
-        )
-
-@router.message(CommandStart())
-async def cmd_start(message: Message):
-    user_id = message.from_user.id
-    first_name = message.from_user.first_name
-    username = message.from_user.username
-    
-    await edit_main_menu(message, user_id, first_name, username)
+    await message.answer(
+        text,
+        reply_markup=get_main_keyboard(user_id),
+        parse_mode="HTML"
+    )
